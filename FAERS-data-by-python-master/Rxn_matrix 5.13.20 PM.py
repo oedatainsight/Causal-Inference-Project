@@ -21,8 +21,11 @@ for chunk in pd.read_csv('/kaggle/input/cleaned-dataset/cleaned_dataset.csv', ch
 
 
 reaction_matrix = pd.concat(chunks, ignore_index=True)
+# Randomly sample 20,000 rows
+reaction_matrix.replace(to_replace=["", " ", None], value=0, inplace=True)  # Replace empty strings or None
+reaction_matrix.fillna(0, inplace=True)
 
 reaction_matrix_sampled = reaction_matrix.sample(n=20000, random_state=42)
-
 reaction_matrix_sampled.to_csv('reaction_matrix_sampled.csv', index=False)
+
 print("Sampled reaction matrix saved as 'reaction_matrix_sampled.csv'")
